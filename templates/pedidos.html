@@ -1,0 +1,43 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Pedidos{% endblock %}
+
+{% block content %}
+    <h1>Pedidos Realizados</h1>
+
+    <a href="/pedidos/novo">Criar novo pedido</a><br><br>
+    <a href="/">Voltar ao início</a><br><br>
+
+    {% if pedidos %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Data</th>
+            <th>Total (R$)</th>
+            <th>Itens</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pedido in pedidos %}
+            <tr>
+                <td>{{ pedido.id }}</td>
+                <td>{{ pedido.cliente.nome }}</td>
+                <td>{{ pedido.data.strftime('%d/%m/%Y %H:%M') }}</td>
+                <td>{{ "%.2f"|format(pedido.total) }}</td>
+                <td>
+                    <ul>
+                        {% for item in pedido.itempedido_set %}
+                            <li>{{ item.quantidade }}x {{ item.produto.nome }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    {% else %}
+        <p>Nenhum pedido foi feito ainda.</p>
+    {% endif %}
+{% endblock %}

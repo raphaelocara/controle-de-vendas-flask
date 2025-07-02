@@ -1,0 +1,29 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Clientes{% endblock %}
+
+{% block content %}
+    <h1>Lista de Clientes</h1>
+
+    <form action="{{ url_for('adicionar_cliente') }}" method="POST">
+        <input type="text" name="nome" placeholder="Nome" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <button type="submit">Adicionar Cliente</button>
+    </form>
+
+    <ul>
+    {% for cliente in clientes %}
+        <li>
+            {{ cliente.nome }} ({{ cliente.email }})
+
+            <!-- Botão de Editar -->
+            <a href="{{ url_for('form_editar_cliente', cliente_id=cliente.id) }}">Editar</a>
+
+            <!-- Botão de Excluir -->
+            <form action="{{ url_for('excluir_cliente', cliente_id=cliente.id) }}" method="POST" style="display:inline;">
+                <button type="submit">Excluir</button>
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

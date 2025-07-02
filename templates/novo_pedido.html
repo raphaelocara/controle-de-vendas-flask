@@ -1,0 +1,30 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Novo Pedido{% endblock %}
+
+{% block content %}
+
+    <h1>Novo Pedido</h1>
+
+    <form method="POST">
+        <label for="cliente">Cliente:</label>
+        <select name="cliente" id="cliente" required>
+            {% for cliente in clientes %}
+                <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <h3>Produtos:</h3>
+        {% for produto in produtos %}
+            <label>
+                <input type="checkbox" name="produtos" value="{{ produto.id }}">
+                {{ produto.nome }} (R$ {{ "%.2f"|format(produto.preco) }})
+            </label>
+            <input type="number" name="quantidades" placeholder="Qtd" min="1" value="1"><br>
+        {% endfor %}
+
+        <br>
+        <button type="submit">Fazer Pedido</button>
+    </form>
+
+   {% endblock %}
