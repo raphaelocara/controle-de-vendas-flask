@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from models import db, Cliente, Produto, Pedido, ItemPedido, Usuario
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sua_chave_secreta_aqui'  # Troque para uma chave secreta segura
@@ -35,7 +36,7 @@ def login():
             return redirect(url_for('index'))
         else:
             flash('Usuário ou senha incorretos.')
-    return render_template('login.html')
+    return render_template('login.html', current_year=datetime.now().year)
 
 @app.route('/logout')
 @login_required
@@ -47,14 +48,14 @@ def logout():
 @app.route('/')
 @login_required
 def index():
-    return render_template('index.html')
+    return render_template('index.html', current_year=datetime.now().year)
 
 # Outras rotas também podem ser protegidas, por exemplo:
 @app.route('/clientes')
 @login_required
 def listar_clientes():
     clientes = Cliente.query.all()
-    return render_template('clientes.html', clientes=clientes)
+    return render_template('clientes.html', clientes=clientes, current_year=datetime.now().year)
 
 # Cria o banco de dados e as tabelas ao iniciar a aplicação
 with app.app_context():
@@ -79,7 +80,7 @@ def excluir_cliente(cliente_id):
 @app.route('/clientes/editar/<int:cliente_id>')
 def form_editar_cliente(cliente_id):
     cliente = Cliente.query.get_or_404(cliente_id)
-    return render_template('editar_cliente.html', cliente=cliente)
+    return render_template('editar_cliente.html', cliente=cliente, current_year=datetime.now().year)
 
 @app.route('/clientes/editar/<int:cliente_id>', methods=['POST'])
 def editar_cliente(cliente_id):
@@ -95,7 +96,7 @@ def editar_cliente(cliente_id):
 @login_required
 def listar_produtos():
     produtos = Produto.query.all()
-    return render_template('produtos.html', produtos=produtos)
+    return render_template('produtos.html', produtos=produtos, current_year=datetime.now().year)
 
 @app.route('/produtos/novo', methods=['GET', 'POST'])
 def novo_produto():
@@ -107,7 +108,7 @@ def novo_produto():
         db.session.add(produto)
         db.session.commit()
         return redirect(url_for('listar_produtos'))
-    return render_template('novo_produto.html')
+    return render_template('novo_produto.html', current_year=datetime.now().year)
 
 @app.route('/produtos/editar/<int:produto_id>', methods=['GET', 'POST'])
 def editar_produto(produto_id):
@@ -118,7 +119,7 @@ def editar_produto(produto_id):
         produto.estoque = int(request.form['estoque'])
         db.session.commit()
         return redirect(url_for('listar_produtos'))
-    return render_template('editar_produto.html', produto=produto)
+    return render_template('editar_produto.html', produto=produto, current_year=datetime.now().year)
 
 @app.route('/produtos/excluir/<int:produto_id>', methods=['POST'])
 def excluir_produto(produto_id):
@@ -130,7 +131,7 @@ def excluir_produto(produto_id):
 @app.route('/pedidos')
 def listar_pedidos():
     pedidos = Pedido.query.all()
-    return render_template('pedidos.html', pedidos=pedidos)
+    return render_template('pedidos.html', pedidos=pedidos, current_year=datetime.now().year)
 
 @app.route('/pedidos/novo', methods=['GET', 'POST'])
 def novo_pedido():
@@ -153,7 +154,7 @@ def novo_pedido():
 
     clientes = Cliente.query.all()
     produtos = Produto.query.all()
-    return render_template('novo_pedido.html', clientes=clientes, produtos=produtos)
+    return render_template('novo_pedido.html', clientes=clientes, produtos=produtos, current_year=datetime.now().year)
 
 if __name__ == '__main__':
     app.run(debug=True)
