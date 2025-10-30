@@ -7,26 +7,40 @@ O objetivo é demonstrar habilidades em desenvolvimento backend, CRUD, autentica
 O sistema permite:
 
 Cadastrar, editar e excluir clientes;
+
 Cadastrar e gerenciar produtos;
+
 Criar e listar pedidos;
+
 Fazer login e logout com controle de acesso;
+
 Exclusão automática em cascata (clientes e seus pedidos);
+
 
 Tecnologias utilizadas:
 
 Python 3
+
 Flask
+
 SQLite
+
 Flask-Login
+
 HTML / CSS / Jinja
+
 Render (Deploy)
+
 Acesso de demonstração
 
 Para testar o sistema online, acesse:
+
 [https://controle-de-vendas-flask.onrender.com]
 
 Use as credenciais públicas:
+
 Usuário: demo
+
 Senha: demo123
 
 Como rodar localmente:
@@ -56,10 +70,15 @@ http://127.0.0.1:5000
 Funcionalidades principais:
 
 -Login e autenticação com Flask-Login
+
 -CRUD completo de clientes e produtos
+
 -Registro e visualização de pedidos
+
 -Exclusão em cascata (ao apagar cliente, os pedidos são removidos)
+
 -Interface simples e intuitiva
+
 -Banco de dados criado automaticamente ao iniciar o app
 
 Objetivo:
@@ -67,7 +86,11 @@ Objetivo:
 Este projeto faz parte do meu portfólio e demonstra:
 
 Lógica e estruturação de aplicações Flask
+
 Manipulação de banco de dados relacional
+
 Criação de rotas seguras com autenticação
+
 Deploy completo de app Python em ambiente de produção
---------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
