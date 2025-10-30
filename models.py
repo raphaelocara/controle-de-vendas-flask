@@ -13,6 +13,14 @@ class Cliente(db.Model):
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
 
+    # Relação com pedidos — agora com cascade
+    pedidos = db.relationship(
+        'Pedido',
+        backref='cliente',
+        lazy=True,
+        cascade="all, delete-orphan"
+    )
+
 class Produto(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
@@ -22,7 +30,6 @@ class Produto(db.Model):
 class Pedido(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     cliente_id = db.Column(db.Integer, db.ForeignKey('cliente.id'), nullable=False)
-    cliente = db.relationship('Cliente', backref=db.backref('pedidos', lazy=True))
     data = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     @property

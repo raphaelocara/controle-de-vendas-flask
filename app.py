@@ -17,6 +17,14 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
+    # Trata o usuário demo (id = 0)
+    if user_id == "0":
+        from flask_login import UserMixin
+        class DemoUser(UserMixin):
+            id = 0
+            username = "demo"
+        return DemoUser()
+    # Para os outros usuários normais do banco
     return Usuario.query.get(int(user_id))
 
 @app.before_request
@@ -30,12 +38,26 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         senha = request.form['senha']
+
+        # --- Login público para demonstração ---
+        if username == "demo" and senha == "demo123":
+            from flask_login import UserMixin
+            class DemoUser(UserMixin):
+                id = 0
+                username = "demo"
+            user = DemoUser()
+            login_user(user)
+            flash('Login de demonstração realizado com sucesso!')
+            return redirect(url_for('index'))
+
+        # --- Login normal via banco ---
         user = Usuario.query.filter_by(username=username).first()
         if user and check_password_hash(user.senha, senha):
             login_user(user)
             return redirect(url_for('index'))
         else:
             flash('Usuário ou senha incorretos.')
+
     return render_template('login.html', current_year=datetime.now().year)
 
 @app.route('/logout')
