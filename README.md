@@ -55,12 +55,12 @@ http://127.0.0.1:5000
 
 Funcionalidades principais:
 
-✅ Login e autenticação com Flask-Login
-✅ CRUD completo de clientes e produtos
-✅ Registro e visualização de pedidos
-✅ Exclusão em cascata (ao apagar cliente, os pedidos são removidos)
-✅ Interface simples e intuitiva
-✅ Banco de dados criado automaticamente ao iniciar o app
+-Login e autenticação com Flask-Login
+-CRUD completo de clientes e produtos
+-Registro e visualização de pedidos
+-Exclusão em cascata (ao apagar cliente, os pedidos são removidos)
+-Interface simples e intuitiva
+-Banco de dados criado automaticamente ao iniciar o app
 
 Objetivo:
 
@@ -70,3 +70,4 @@ Lógica e estruturação de aplicações Flask
 Manipulação de banco de dados relacional
 Criação de rotas seguras com autenticação
 Deploy completo de app Python em ambiente de produção
+--------------------------------------------------------------------------
